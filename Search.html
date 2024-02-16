@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Search Guitar</title>
+<style>
+  body {
+    background-color: beige;
+    font-family: Arial, sans-serif;
+  }
+  .container {
+    max-width: 800px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  .form-group input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .btn-search {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .btn-search:hover {
+    background-color: #45a049;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  th, td {
+    padding: 8px;
+    border: 1px solid #ddd;
+    text-align: left;
+  }
+  th {
+    background-color: #f2f2f2;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Search Guitar</h2>
+  <div class="form-group">
+    <label for="builder">Builder:</label>
+    <input type="text" id="builder" placeholder="Enter builder">
+  </div>
+  <div class="form-group">
+    <label for="model">Model:</label>
+    <input type="text" id="model" placeholder="Enter model">
+  </div>
+  <div class="form-group">
+    <label for="type">Type:</label>
+    <input type="text" id="type" placeholder="Enter type">
+  </div>
+  <div class="form-group">
+    <label for="backWood">Back Wood:</label>
+    <input type="text" id="backWood" placeholder="Enter back wood">
+  </div>
+  <div class="form-group">
+    <label for="topWood">Top Wood:</label>
+    <input type="text" id="topWood" placeholder="Enter top wood">
+  </div>
+  <button class="btn-search" onclick="searchGuitars()">Search</button>
+</div>
+<div class="container">
+  <h2>Search Results</h2>
+  <table id="searchResults">
+    <tr>
+      <th>Serial Number</th>
+      <th>Price</th>
+      <th>Builder</th>
+      <th>Model</th>
+      <th>Type</th>
+      <th>Back Wood</th>
+      <th>Top Wood</th>
+    </tr>
+  </table>
+</div>
+<script>
+  function searchGuitars() {
+    var builder = document.getElementById("builder").value.toLowerCase();
+    var model = document.getElementById("model").value.toLowerCase();
+    var type = document.getElementById("type").value.toLowerCase();
+    var backWood = document.getElementById("backWood").value.toLowerCase();
+    var topWood = document.getElementById("topWood").value.toLowerCase();
+    
+    var guitars = [
+      { serialNumber: "123", price: "$1000", builder: "Fender", model: "Stratocaster", type: "Electric", backWood: "Maple", topWood: "Maple" },
+      { serialNumber: "456", price: "$1500", builder: "Gibson", model: "Les Paul", type: "Electric", backWood: "Mahogany", topWood: "Maple" },
+      { serialNumber: "789", price: "$800", builder: "Martin", model: "D-28", type: "Acoustic", backWood: "Rosewood", topWood: "Spruce" },
+      { serialNumber: "101", price: "$1200", builder: "Taylor", model: "914ce", type: "Acoustic/Electric", backWood: "Rosewood", topWood: "Sitka Spruce" },
+      { serialNumber: "202", price: "$1700", builder: "PRS", model: "Custom 24", type: "Electric", backWood: "Mahogany", topWood: "Maple" }
+    ];
+
+    var searchResultsTable = document.getElementById("searchResults");
+    searchResultsTable.innerHTML = ""; // Clear previous search results
+    
+    guitars.forEach(function(guitar) {
+      if ((builder === "" || guitar.builder.toLowerCase().includes(builder)) &&
+          (model === "" || guitar.model.toLowerCase().includes(model)) &&
+          (type === "" || guitar.type.toLowerCase().includes(type)) &&
+          (backWood === "" || guitar.backWood.toLowerCase().includes(backWood)) &&
+          (topWood === "" || guitar.topWood.toLowerCase().includes(topWood))) {
+        
+        var row = searchResultsTable.insertRow();
+        var serialNumberCell = row.insertCell(0);
+        var priceCell = row.insertCell(1);
+        var builderCell = row.insertCell(2);
+        var modelCell = row.insertCell(3);
+        var typeCell = row.insertCell(4);
+        var backWoodCell = row.insertCell(5);
+        var topWoodCell = row.insertCell(6);
+        
+        serialNumberCell.textContent = guitar.serialNumber;
+        priceCell.textContent = guitar.price;
+        builderCell.textContent = guitar.builder;
+        modelCell.textContent = guitar.model;
+        typeCell.textContent = guitar.type;
+        backWoodCell.textContent = guitar.backWood;
+        topWoodCell.textContent = guitar.topWood;
+      }
+    });
+  }
+</script>
+</body>
+</html>

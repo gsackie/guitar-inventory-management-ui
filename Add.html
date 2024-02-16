@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Guitar</title>
+<style>
+  body {
+    background-color: beige;
+    font-family: Arial, sans-serif;
+  }
+  .container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  .form-group {
+    margin-bottom: 20px;
+  }
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  .form-group input[type="text"], .form-group input[type="number"], .form-group select {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  .btn-add {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+  }
+  .btn-add:hover {
+    background-color: #45a049;
+  }
+</style>
+</head>
+<body>
+<div class="container">
+  <h2>Add Guitar</h2>
+  <div class="form-group">
+    <label for="serialNumber">Serial Number:</label>
+    <input type="text" id="serialNumber" placeholder="Enter serial number">
+  </div>
+  <div class="form-group">
+    <label for="price">Price:</label>
+    <input type="number" id="price" placeholder="Enter price">
+  </div>
+  <div class="form-group">
+    <label for="builder">Builder:</label>
+    <input type="text" id="builder" placeholder="Enter builder">
+  </div>
+  <div class="form-group">
+    <label for="model">Model:</label>
+    <input type="text" id="model" placeholder="Enter model">
+  </div>
+  <div class="form-group">
+    <label for="type">Type:</label>
+    <input type="text" id="type" placeholder="Enter type">
+  </div>
+  <div class="form-group">
+    <label for="backWood">Back Wood:</label>
+    <input type="text" id="backWood" placeholder="Enter back wood">
+  </div>
+  <div class="form-group">
+    <label for="topWood">Top Wood:</label>
+    <input type="text" id="topWood" placeholder="Enter top wood">
+  </div>
+  <button class="btn-add" onclick="addGuitar()">Add Guitar</button>
+</div>
+<script>
+  function addGuitar() {
+    var serialNumber = document.getElementById("serialNumber").value;
+    var price = document.getElementById("price").value;
+    var builder = document.getElementById("builder").value;
+    var model = document.getElementById("model").value;
+    var type = document.getElementById("type").value;
+    var backWood = document.getElementById("backWood").value;
+    var topWood = document.getElementById("topWood").value;
+    
+    var guitarData = {
+      "serialNumber": serialNumber,
+      "price": price,
+      "builder": builder,
+      "model": model,
+      "type": type,
+      "backWood": backWood,
+      "topWood": topWood
+    };
+    
+    // Display guitar data in JSON format
+    alert(JSON.stringify(guitarData, null, 2));
+  }
+</script>
+</body>
+</html>
