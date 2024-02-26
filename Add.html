@@ -88,6 +88,12 @@
     var backWood = document.getElementById("backWood").value;
     var topWood = document.getElementById("topWood").value;
     
+    // Check if any field is empty
+    if (!serialNumber || !price || !builder || !model || !type || !backWood || !topWood) {
+      alert("Please fill in all fields.");
+      return;
+    }
+    
     var guitarData = {
       "serialNumber": serialNumber,
       "price": price,
@@ -98,9 +104,34 @@
       "topWood": topWood
     };
     
-    // Display guitar data in JSON format
-    alert(JSON.stringify(guitarData, null, 2));
+    // Send data to backend API
+    fetch('/inventory/add', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(guitarData),
+    })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      return response.json();
+    })
+    .then(data => {
+      // Check backend response
+      if (data && data.message === "success") {
+        alert('The guitar was added to the system.');
+      } else {
+        throw new Error('Backend error');
+      }
+    })
+    .catch(error => {
+      console.error('There was a problem adding the guitar:', error);
+      alert('Something went wrong. Please try again or contact the customer support team.');
+    });
   }
 </script>
+
 </body>
 </html>

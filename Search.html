@@ -105,43 +105,50 @@
     var backWood = document.getElementById("backWood").value.toLowerCase();
     var topWood = document.getElementById("topWood").value.toLowerCase();
     
-    var guitars = [
-      { serialNumber: "123", price: "$1000", builder: "Fender", model: "Stratocaster", type: "Electric", backWood: "Maple", topWood: "Maple" },
-      { serialNumber: "456", price: "$1500", builder: "Gibson", model: "Les Paul", type: "Electric", backWood: "Mahogany", topWood: "Maple" },
-      { serialNumber: "789", price: "$800", builder: "Martin", model: "D-28", type: "Acoustic", backWood: "Rosewood", topWood: "Spruce" },
-      { serialNumber: "101", price: "$1200", builder: "Taylor", model: "914ce", type: "Acoustic/Electric", backWood: "Rosewood", topWood: "Sitka Spruce" },
-      { serialNumber: "202", price: "$1700", builder: "PRS", model: "Custom 24", type: "Electric", backWood: "Mahogany", topWood: "Maple" }
-    ];
+    // Fetching results from the backend. I learned the ajax methid and decided to use it
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/inventory/search?builder=" + builder + "&model=" + model + "&type=" + type + "&backWood=" + backWood + "&topWood=" + topWood, true);
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == 4) {
+        if (xhr.status == 200) {
+          var guitars = JSON.parse(xhr.responseText);
+          displaySearchResults(guitars);
+        } else {
+          displayErrorMessage("Failed to fetch search results. Please try again later.");
+        }
+      }
+    };
+    xhr.send();
+  }
 
+  function displaySearchResults(guitars) {
     var searchResultsTable = document.getElementById("searchResults");
-    searchResultsTable.innerHTML = ""; // Clear previous search results
+    searchResultsTable.innerHTML = ""; // Clearing the previous search results
     
     guitars.forEach(function(guitar) {
-      if ((builder === "" || guitar.builder.toLowerCase().includes(builder)) &&
-          (model === "" || guitar.model.toLowerCase().includes(model)) &&
-          (type === "" || guitar.type.toLowerCase().includes(type)) &&
-          (backWood === "" || guitar.backWood.toLowerCase().includes(backWood)) &&
-          (topWood === "" || guitar.topWood.toLowerCase().includes(topWood))) {
-        
-        var row = searchResultsTable.insertRow();
-        var serialNumberCell = row.insertCell(0);
-        var priceCell = row.insertCell(1);
-        var builderCell = row.insertCell(2);
-        var modelCell = row.insertCell(3);
-        var typeCell = row.insertCell(4);
-        var backWoodCell = row.insertCell(5);
-        var topWoodCell = row.insertCell(6);
-        
-        serialNumberCell.textContent = guitar.serialNumber;
-        priceCell.textContent = guitar.price;
-        builderCell.textContent = guitar.builder;
-        modelCell.textContent = guitar.model;
-        typeCell.textContent = guitar.type;
-        backWoodCell.textContent = guitar.backWood;
-        topWoodCell.textContent = guitar.topWood;
-      }
+      var row = searchResultsTable.insertRow();
+      var serialNumberCell = row.insertCell(0);
+      var priceCell = row.insertCell(1);
+      var builderCell = row.insertCell(2);
+      var modelCell = row.insertCell(3);
+      var typeCell = row.insertCell(4);
+      var backWoodCell = row.insertCell(5);
+      var topWoodCell = row.insertCell(6);
+      
+      serialNumberCell.textContent = guitar.serialNumber;
+      priceCell.textContent = guitar.price;
+      builderCell.textContent = guitar.builder;
+      modelCell.textContent = guitar.model;
+      typeCell.textContent = guitar.type;
+      backWoodCell.textContent = guitar.backWood;
+      topWoodCell.textContent = guitar.topWood;
     });
   }
+
+  function displayErrorMessage(message) {
+    alert(message); // Displaying pop-up error message
+  }
 </script>
+
 </body>
 </html>
